@@ -12,6 +12,7 @@ if(POLICY CMP0063)
 endif()
 
 project(tinyxml2)
+set(CMAKE_MODULE_PATH ${CMAKE_CURRENT_SOURCE_DIR} ${CMAKE_MODULE_PATH})
 include(GNUInstallDirs)
 include(CTest)
 #enable_testing()
@@ -152,6 +153,13 @@ endforeach()
 
 configure_file(tinyxml2.pc.in tinyxml2.pc @ONLY)
 install(FILES ${CMAKE_CURRENT_BINARY_DIR}/tinyxml2.pc DESTINATION ${CMAKE_INSTALL_LIBDIR}/pkgconfig)
+
+if(OS2)
+set_target_properties(tinyxml2 PROPERTIES
+ OS2_DEF_VENDOR "Elbert Pol"
+ OS2_DEF_PATCH "${tinyxml2_VERSION_PATCH}"
+ OS2_DEF_VERSION "${TINYXML2_VERSION}")
+endif()
 
 # uninstall target
 if(NOT TARGET uninstall)
